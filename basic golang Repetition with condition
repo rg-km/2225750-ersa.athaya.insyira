@@ -1,0 +1,59 @@
+package main
+
+import "fmt"
+
+type User struct {
+	name string
+	age  int
+	role string
+}
+
+func main() {
+
+	users := []User{
+		{
+			name: "Aditira",
+			age:  20,
+			role: "Programmer",
+		},
+		{
+			name: "Dimas",
+			age:  18,
+			role: "Designer",
+		},
+		{
+			name: "Yuni",
+			age:  21,
+			role: "DevOps",
+		},
+		{
+			name: "Dito",
+			age:  22,
+			role: "Programmer",
+		},
+		{
+			name: "Juno",
+			age:  25,
+			role: "DevOps",
+		},
+	}
+	// TODO: answer here
+	var searchResult []User
+	var role string
+	fmt.Printf("Masukan Role : ")
+	fmt.Scan(&role)
+
+	for _, user := range users {
+		if user.role == role {
+			searchResult = append(searchResult, user)
+		}
+	}
+	if len(searchResult) != 0 {
+		fmt.Printf("%v Found: ", role)
+		for _, U := range searchResult {
+			fmt.Println("Name: ", U.name, "Age: ", U.age, "Role: ", U.role)
+		}
+	} else {
+		fmt.Printf("Role: %v Not Found!", role)
+	}
+}
