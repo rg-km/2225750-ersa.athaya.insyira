@@ -1,0 +1,17 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ruang-guru/playground.git",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test:cypress": "cypress run"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.20.2",
+    "cypress": "^6.9.1",
+    "jest": "^27.5.1"
+  }
+}
