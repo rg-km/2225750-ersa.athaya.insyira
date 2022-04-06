@@ -2,7 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -27,9 +26,7 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	fmt.Println(res)
-
-	json.NewEncoder(w).Encode(LoginSuccessResponse{Username: ""}) // TODO: replace this
+	json.NewEncoder(w).Encode(LoginSuccessResponse{Username: *res})
 }
 
 func (api *API) logout(w http.ResponseWriter, req *http.Request) {
@@ -41,6 +38,7 @@ func (api *API) logout(w http.ResponseWriter, req *http.Request) {
 		encoder.Encode(AuthErrorResponse{Error: err.Error()})
 		return
 	}
+	w.WriteHeader(http.StatusOK)
 
-	encoder.Encode(AuthErrorResponse{Error: ""}) // TODO: replace this
+	// encoder.Encode(AuthErrorResponse{Error: ""}) // TODO: replace this
 }
