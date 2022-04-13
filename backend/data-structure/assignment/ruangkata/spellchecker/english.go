@@ -48,10 +48,39 @@ func NewEnglishSpellChecker() (SpellChecker, error) {
 	return &spellchecker{words}, nil
 }
 
-func (s *spellchecker) CheckWord(word string) bool {
-	return false // TODO: replace this
+func (s *spellchecker) CheckWord(word string) bool { // func buat cek kata/word di dictionary
+	// check (exists) s.words[word] ada atau tidak di data set (jgn lupa convert word ke lowercase semua pake pkg strings.ToLower)
+
+	// convert word ke lowercase
+	word = strings.ToLower(word)
+	_, isAvail := s.words[word]
+	return isAvail
+
+	// return exists
+
 }
 
 func (s *spellchecker) CheckSentence(sentence string) (validWords []string, invalidWords []string) {
-	return nil, nil // TODO: replace this
+	// buat 2 slice baru (validWords, invalidWords) buat check valid dan invalid word (bisa pake make)
+	validWords = make([]string, 0)
+	invalidWords = make([]string, 0)
+	// looping range sentence (displit per spasi: pke bantuan pkg strings.Split(sentence, " "))
+	for _, word := range strings.Split(sentence, " ") {
+		// cek word di dictionary
+		if s.CheckWord(word) {
+			// jika ada, tambahkan ke validWords
+			validWords = append(validWords, word)
+		} else {
+			// jika tidak ada, tambahkan ke invalidWords
+			invalidWords = append(invalidWords, word)
+		}
+	}
+
+	return validWords, invalidWords
+	// di dlm looping check s.CheckWord(word) -> jika true append validWords
+	// else append invalidWords
+
+	// return
 }
+
+// cara go run spellchecker -> go run di folder assignment/ruangkata
