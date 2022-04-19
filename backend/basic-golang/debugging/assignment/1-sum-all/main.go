@@ -22,5 +22,9 @@ func SumAll(arr []int) int {
 }
 
 func SumAllCorrect(arr []int) int {
-	return 0 // TODO: replace this
+	res := arr[0]
+	for i := 1; i < len(arr); i++ {
+		res += arr[i]
+	}
+	return res
 }
