@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -15,7 +14,27 @@ var data []string
 var err error
 
 var handler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
+	if r.Method == "GET" {
+
+		if len(data) == 0 && err == nil {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		if len(data) > 0 && err == nil {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		if len(data) > 0 && err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+	}
+
+	w.WriteHeader(http.StatusMethodNotAllowed)
+
 }
 
 func main() {
