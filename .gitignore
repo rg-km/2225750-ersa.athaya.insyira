@@ -1,5 +1,6 @@
 .DS_Store
 .vscode
+.idea
 site/public
 site/.hugo_build.lock
 
@@ -144,3 +145,9 @@ cypress/screenshots
 # grader
 grader-config.json
 grader-cli
+*.db
+
+# output of profiling file
+*.pprof
+*.test
+*.out
