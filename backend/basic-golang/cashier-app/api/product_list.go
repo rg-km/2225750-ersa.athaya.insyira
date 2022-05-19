@@ -2,7 +2,10 @@ package api
 
 import (
 	"encoding/json"
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 021a27023f909726932ab221c53b9eee7ac2acb6
 	"net/http"
 )
 
@@ -21,6 +24,21 @@ type ProductListSuccessResponse struct {
 }
 
 func (api *API) productList(w http.ResponseWriter, req *http.Request) {
+<<<<<<< HEAD
+=======
+	api.AllowOrigin(w, req)
+	encoder := json.NewEncoder(w)
+	// _, err := api.AuthMiddleWare(w, req)
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusUnauthorized)
+	// 	encoder.Encode(ProductListErrorResponse{Error: err.Error()})
+	// 	return
+	// }
+
+	response := ProductListSuccessResponse{}
+	response.Products = make([]Product, 0)
+
+>>>>>>> 021a27023f909726932ab221c53b9eee7ac2acb6
 	products, err := api.productsRepo.SelectAll()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -29,6 +47,7 @@ func (api *API) productList(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+<<<<<<< HEAD
 	// looping products dan ubah kedalam bentuk json
 	var productsJson []Product
 	for _, product := range products {
@@ -38,6 +57,9 @@ func (api *API) productList(w http.ResponseWriter, req *http.Request) {
 			Category: product.Category,
 		})
 	}
+=======
+	// fmt.Println(products)
+>>>>>>> 021a27023f909726932ab221c53b9eee7ac2acb6
 
 	// kirim response
 	w.Header().Set("Content-Type", "application/json")

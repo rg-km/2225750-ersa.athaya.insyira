@@ -22,6 +22,7 @@ type CartListSuccessResponse struct {
 }
 
 func (api *API) addToCart(w http.ResponseWriter, req *http.Request) {
+	api.AllowOrigin(w, req)
 	productName := req.URL.Query().Get("product_name")
 	encoder := json.NewEncoder(w)
 
@@ -52,6 +53,7 @@ func (api *API) addToCart(w http.ResponseWriter, req *http.Request) {
 }
 
 func (api *API) clearCart(w http.ResponseWriter, req *http.Request) {
+	api.AllowOrigin(w, req)
 	err := api.cartItemRepo.ResetCartItems()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -65,6 +67,7 @@ func (api *API) clearCart(w http.ResponseWriter, req *http.Request) {
 }
 
 func (api *API) cartList(w http.ResponseWriter, req *http.Request) {
+	api.AllowOrigin(w, req)
 	cartItems, err := api.cartItemRepo.SelectAll()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
