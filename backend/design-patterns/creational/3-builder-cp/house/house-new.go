@@ -14,10 +14,30 @@ type House struct {
 }
 
 type HouseBuilder interface {
-	// TODO: answer here
+	BuildHouseWithoutSwimmingPool() House
 	getHouse() House
 }
 
+type ZimbabweHouseBuilder struct{}
+
+func (z *ZimbabweHouseBuilder) getHouse() House {
+	return House{
+		NumOfWindows:    2,
+		NumOfDoors:      1,
+		HasGarage:       true,
+		HasSwimmingPool: true,
+	}
+}
+
+func (i *ZimbabweHouseBuilder) BuildHouseWithoutSwimmingPool() House {
+	return House{
+		NumOfWindows:    1,
+		NumOfDoors:      1,
+		HasGarage:       true,
+		HasSwimmingPool: false,
+	}
+}
+
 func NewBuilder(builderType string) HouseBuilder {
-	return nil // TODO: replace this
+	return &ZimbabweHouseBuilder{}
 }
