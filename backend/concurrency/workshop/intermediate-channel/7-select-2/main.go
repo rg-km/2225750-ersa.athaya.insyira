@@ -30,16 +30,25 @@ func main() {
 
 }
 
+var start time.Time
+
+func init() {
+	start = time.Now()
+}
+
 func (p *person) awake(foodInput, drinkInput chan string) {
 	for {
 		select {
 		case drink := <-drinkInput:
 			fmt.Printf("%s minum %s\n", p.name, drink)
+			fmt.Printf("Waktu minum %s\n", time.Since(start))
 		case food := <-foodInput:
 			fmt.Printf("%s makan %s\n", p.name, food)
+			fmt.Printf("Waktu makan %s\n", time.Since(start))
 		default:
 			fmt.Printf("%s %s\n", p.name, p.hobby)
 			time.Sleep(100 * time.Millisecond) // mengerjakan soal matematika
+			fmt.Printf("Waktu hobby %s\n", time.Since(start))
 		}
 	}
 }

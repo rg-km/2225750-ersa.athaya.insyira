@@ -22,4 +22,10 @@ func playMatch(i int) {
 
 func startTournament() {
 	// TODO: answer here
+	for i := 0; i < 10; i++ {
+		go playMatch(i)
+	}
+	time.Sleep(100 * time.Millisecond)
+	fmt.Println("all the match finished. Total time needed:", time.Since(start))
+
 }

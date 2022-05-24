@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 //anda diminta untuk mendapatkan hasil pangkat 2 dari angka 1-20
 //gunakan fungsi squareWorker untuk menerima dan mengirim data yang sudah dipangkatkan
@@ -18,6 +20,9 @@ func createRequest(workerInput, resultChan chan<- int, workerOutput <-chan int) 
 	for i := 1; i < 16; i++ {
 		var res int
 		// TODO: answer here
+		workerInput <- i // mengirim angka ke workerInput agar dapat dibaca pada fungsi squareWorker dan dikirimkan ke workerOutput
+		res = <-workerOutput
+
 		resultSum += res
 		fmt.Printf("hasil pangkat 2 angka %d adalah: %d\n", i, res) // 0 1 4 9 16
 	}
