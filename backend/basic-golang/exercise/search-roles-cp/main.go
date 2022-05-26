@@ -59,6 +59,22 @@ func main() {
 			role: "DevOps",
 		},
 	}
+	var input string
 
-	// TODO: answer here
+	fmt.Print("Masukan Role : ")
+	fmt.Scan(&input)
+	var roles string
+
+	for _, item := range users {
+		roles = item.role
+		if input == roles {
+			fmt.Printf("Name : %s Age: %d Role : %s", item.name, item.age, item.role)
+			fmt.Println()
+		}
+
+	}
+
+	if input != "Designer" && input != "Programmer" && input != "DevOps" {
+		fmt.Printf("Role: %s Not Found!", input)
+	}
 }

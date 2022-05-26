@@ -12,6 +12,12 @@ import (
 
 func aVeryBigSum(ar []int64) int64 {
 	// TODO: answer here
+	var result int64
+	for i := 0; i < len(ar); i++ {
+		result += ar[i]
+	}
+
+	return result
 }
 
 func main() {

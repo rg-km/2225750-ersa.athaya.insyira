@@ -10,8 +10,15 @@ import (
 // Kalian dapat menambahkan sentinel error untuk mengecek apakah umurnya valid (misal kurang dari 0) dengan nama ErrInvalidAge
 
 var ErrDataNotFound = errors.New("error data not found")
+var ErrInvalidAge = errors.New("error age is invalid, less than 0")
 
-// TODO: answer here
+// function find data
+func FindData(data map[string]int, name string) (int, error) {
+	if age, ok := data[name]; ok {
+		return age, nil
+	}
+	return 0, ErrDataNotFound
+}
 
 func GetAge(data map[string]int, name string) (int, error) {
 	if _, ok := data[name]; !ok {
@@ -21,6 +28,7 @@ func GetAge(data map[string]int, name string) (int, error) {
 	if data[name] < 0 {
 		// Isilah baris ini dengan return 0 dan sentinel error ErrInvalidAge
 		// TODO: answer here
+		return 0, ErrInvalidAge
 	}
 
 	return data[name], nil
@@ -37,4 +45,5 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
 }

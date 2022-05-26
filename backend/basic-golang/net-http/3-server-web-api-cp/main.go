@@ -17,8 +17,42 @@ type Table struct {
 	Total int    `json:"total"`
 }
 
-func viewTable(w http.ResponseWriter, r *http.Request) {
+func TablesHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: answer here
+	// set header
+	w.Header().Set("Content-Type", "text/html")
+
+	// ambil id yang diinput user
+	id := r.URL.Query().Get("id")
+
+	// cek ke data apakah ada id yang di minta ?
+	for _, table := range data {
+		if table.ID == id {
+
+			// masukan ke dalam map
+			data := map[string]interface{}{
+				"title": "Server-Web-API",
+				"table": table,
+			}
+
+			// untuk menambahkan delimiter path
+			filepath := path.Join("views", "index.html")
+			tmpl, err := template.ParseFiles(filepath)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+
+			// render template
+			if err := tmpl.Execute(w, data); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			return
+		}
+	}
+
+	// jika tidak ada, tampilkan pesan
+	fmt.Fprintf(w, "Table ID: %s not found", id)
+
 }
 
 var data = []Table{
@@ -29,7 +63,7 @@ var data = []Table{
 }
 
 func main() {
-	http.HandleFunc("/view/table", viewTable)
+	http.HandleFunc("/view/table", TablesHandler)
 
 	fmt.Println("starting web server at http://localhost:8080/")
 	// daftarkan server untuk listen di port 8080

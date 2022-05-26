@@ -9,7 +9,6 @@ import (
 	"strings"
 )
 
-
 /*
  * Complete the 'counterGame' function below.
  *
@@ -18,9 +17,49 @@ import (
  */
 
 //Problem statement: https://www.hackerrank.com/challenges/counter-game
+func contains(arr []int64, n int64) bool {
+	for _, v := range arr {
+		if v == n {
+			return true
+		}
+	}
+	return false
+}
+
 func counterGame(n int64) string {
 	// Write your code here
-	return "" // TODO: replace this
+	powerOfTwos := make([]int64, 0)
+	for i := int64(1); i <= n; i *= 2 {
+		powerOfTwos = append(powerOfTwos, i)
+	}
+
+	turn := 0
+	for n > 1 {
+		turn += 1
+		if contains(powerOfTwos, n) {
+			n /= 2
+			continue
+		}
+
+		prevPowerOfTwo := int64(1)
+		for i := len(powerOfTwos) - 1; i >= 0; i-- {
+			if n > powerOfTwos[i] {
+				prevPowerOfTwo = powerOfTwos[i]
+				break
+			}
+		}
+		n -= prevPowerOfTwo
+	}
+
+	if turn == 0 {
+		return "Louise"
+	} else {
+		if turn%2 == 1 {
+			return "Louise"
+		} else {
+			return "Richard"
+		}
+	}
 }
 
 func main() {

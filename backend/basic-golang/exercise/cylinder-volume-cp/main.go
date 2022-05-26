@@ -18,4 +18,17 @@ import (
 
 func main() {
 	// TODO: answer here
+	const phi = 3.14
+	var r, t, v float64
+
+	fmt.Print("Masukkan jari-jari alas tabung: ")
+	fmt.Scan(&r)
+
+	fmt.Print("Masukkan tinggi tabung : ")
+	fmt.Scan(&t)
+
+	v = phi * r * r * t
+	fmt.Print("Jadi volumenya adalah : ", v)
+
+	fmt.Println()
 }

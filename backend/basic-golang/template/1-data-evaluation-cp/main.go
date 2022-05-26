@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 )
 
@@ -20,6 +21,43 @@ type Account struct {
 }
 
 func ExecuteToByteBuffer(account Account) ([]byte, error) {
-	var textTemplate string
-	// TODO: answer here
+	// siapkan kalimat yang akan dicetak
+	textTemplate := "Akun {{.Name}} dengan Nomor {{.Number}} memiliki saldo sebesar ${{.Balance}}."
+
+	// membuat tempalte dengan nama account
+	t, err := template.New("account").Parse(textTemplate)
+	if err != nil {
+		return nil, err
+	}
+
+	// membuat buffer
+	var b bytes.Buffer
+
+	// menjalankan template
+	err = t.Execute(&b, account)
+	if err != nil {
+		return nil, err
+	}
+
+	// mengembalikan hasil
+	return b.Bytes(), nil
+
+}
+
+func main() {
+	// isi struct account
+	acc := Account{
+		Name:    "Tony",
+		Number:  "1002321",
+		Balance: 1000,
+	}
+	// memanggil function ExecuteToByteBuffer
+	b, err := ExecuteToByteBuffer(acc)
+
+	// cek error
+	if err != nil {
+		panic(err)
+	}
+	// menampilkan hasil dengan convert ke string
+	fmt.Println(string(b))
 }

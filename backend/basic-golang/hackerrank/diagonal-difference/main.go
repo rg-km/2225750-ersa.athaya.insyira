@@ -12,6 +12,24 @@ import (
 
 func diagonalDifference(arr [][]int32) int32 {
 	// TODO: answer here
+	var (
+		ans      int32 = 0
+		leftTop  int32 = 0
+		rightTop int32 = 0
+	)
+
+	for i := 0; i < int(len(arr)); i++ {
+		leftTop += arr[i][i]
+		rightTop += arr[(int(len(arr))-1)-i][i]
+
+	}
+
+	ans = leftTop - rightTop
+	if ans < 0 {
+		ans *= -1
+	}
+
+	return ans
 }
 
 func main() {

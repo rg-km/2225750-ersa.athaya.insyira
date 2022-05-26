@@ -41,32 +41,47 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-<<<<<<< HEAD
-	json.NewEncoder(w).Encode(LoginSuccessResponse{Username: *res})
-=======
 	// Task: 1. Deklarasi expiry time untuk token jwt
 	//       2. Buat claim menggunakan variable yang sudah didefinisikan diatas
 	//       3. expiry time menggunakan time millisecond
 
 	// TODO: answer here
+	tokenExpJWT := time.Now().Add(time.Minute * 3)
+	myClaim := Claims{
+		Username: *res,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: tokenExpJWT.Unix(),
+		},
+	}
 
 	// Task: Buat token menggunakan encoded claim dengan salah satu algoritma yang dipakai
 
 	// TODO: answer here
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, myClaim)
 
 	// Task: 1. Buat jwt string dari token yang sudah dibuat menggunakan JWT key yang telah dideklarasikan
 	//       2. return internal error ketika ada kesalahan ketika pembuatan JWT string
 
 	// TODO: answer here
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		encoder.Encode(AuthErrorResponse{Error: err.Error()})
+		return
+	}
 
 	// Task: Set token string kedalam cookie response
 
 	// TODO: answer here
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Value:   tokenString,
+		Expires: tokenExpJWT,
+	})
 
 	// Task: Return response berupa username dan token JWT yang sudah login
 
-	json.NewEncoder(w).Encode(LoginSuccessResponse{Username: "", Token: ""}) // TODO: replace this
->>>>>>> 021a27023f909726932ab221c53b9eee7ac2acb6
+	json.NewEncoder(w).Encode(LoginSuccessResponse{Username: *res, Token: tokenString}) // TODO: replace this
 }
 
 func (api *API) logout(w http.ResponseWriter, req *http.Request) {
@@ -79,7 +94,10 @@ func (api *API) logout(w http.ResponseWriter, req *http.Request) {
 		encoder.Encode(AuthErrorResponse{Error: err.Error()})
 		return
 	}
-	w.WriteHeader(http.StatusOK)
 
+	w.WriteHeader(http.StatusOK)
+	// encoder := json.NewEncoder(w)
+	// encoder.Encode(AuthErrorResponse{Error: ""})
 	// encoder.Encode(AuthErrorResponse{Error: ""}) // TODO: replace this
+
 }
