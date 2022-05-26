@@ -10,4 +10,5 @@ import (
 
 func main() {
 	// TODO: answer here
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }

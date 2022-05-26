@@ -65,7 +65,11 @@ func (u *CartItemRepository) Save(cartItems []CartItem) error {
 }
 
 func (u *CartItemRepository) SelectAll() ([]CartItem, error) {
-	return []CartItem{}, nil // TODO: replace this
+	data, err := u.LoadOrCreate()
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
 }
 
 func (u *CartItemRepository) Add(product Product) error {
@@ -74,13 +78,54 @@ func (u *CartItemRepository) Add(product Product) error {
 		return err
 	}
 
-	return nil // TODO: replace this
+	// jika item yang akan di add sudah ada maka lakukan update pada quantity, jika tidak ada maka lakukan add
+	// update
+	for i := 0; i < len(cartItems); i++ {
+		if cartItems[i].ProductName == product.ProductName {
+			cartItems[i].Quantity++
+			return u.Save(cartItems)
+		}
+	}
+
+	// add
+	cartItems = append(cartItems, CartItem{
+		Category:    product.Category,
+		ProductName: product.ProductName,
+		Price:       product.Price,
+		Quantity:    1,
+	})
+
+	// save data
+	return u.Save(cartItems)
 }
 
 func (u *CartItemRepository) ResetCartItems() error {
-	return nil // TODO: replace this
+	// lakukan implementasi interface delete
+	u.db.Delete("cart_items")
+
+	// bikin header csv
+	records := [][]string{
+		{"category", "product_name", "price", "quantity"},
+	}
+
+	// save file kosong
+	return u.db.Save("cart_items", records)
 }
 
 func (u *CartItemRepository) TotalPrice() (int, error) {
-	return 0, nil // TODO: replace this
+	// lakukan load semua cart items melalui method loadOrCreate
+	cartItems, err := u.LoadOrCreate()
+	if err != nil {
+		return 0, err
+	}
+
+	// var menampung total harga
+	var totalPrice int
+
+	// loop semua item untuk menghitung total harga
+	for i := 0; i < len(cartItems); i++ {
+		totalPrice += cartItems[i].Price * cartItems[i].Quantity
+	}
+
+	return totalPrice, nil
 }

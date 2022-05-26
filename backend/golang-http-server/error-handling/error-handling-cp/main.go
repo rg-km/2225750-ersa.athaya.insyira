@@ -15,17 +15,19 @@ var err error
 
 var handler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-
+		// dengan data kosong dan error nil
 		if len(data) == 0 && err == nil {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 
+		// dengan data tidak kosong dan error nil
 		if len(data) > 0 && err == nil {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
 
+		// dengan data tidak kosong dan error tidak nil
 		if len(data) > 0 && err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -34,7 +36,7 @@ var handler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusMethodNotAllowed)
-
+	// TODO: answer here
 }
 
 func main() {

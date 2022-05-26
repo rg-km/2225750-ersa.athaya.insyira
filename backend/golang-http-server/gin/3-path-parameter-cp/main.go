@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -33,11 +32,29 @@ var data = map[int]User{
 }
 
 func ProfileHandler() func(c *gin.Context) {
-	return func(c *gin.Context) {} // TODO: replace this
+	return func(c *gin.Context) {
+		// amvil id dari url
+		myParam := c.Param("id")
+		// convert string ke int
+		myId, _ := strconv.Atoi(myParam)
+
+		// jika id tidak ditemukan
+		if _, ok := data[myId]; !ok {
+			c.String(http.StatusNotFound, "data not found")
+			return
+		} else {
+			c.String(http.StatusOK, "Name: %s, Country: %s, Age: %d", data[myId].Name, data[myId].Country, data[myId].Age)
+		}
+	}
 }
 
 func GetRouter() *gin.Engine {
-	return &gin.Engine{} // TODO: replace this
+	r := gin.Default()
+
+	// get ke /profile
+	r.GET("/profile/:id", ProfileHandler())
+
+	return r
 }
 
 func main() {

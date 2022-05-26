@@ -6,5 +6,15 @@ import (
 )
 
 func SetupRouter(urlHandler handlers.URLHandler) *gin.Engine {
-	return &gin.Engine{} // TODO: replace this
+	// insiasi router
+	r := gin.Default()
+
+	// set routes
+	r.GET("/:path", urlHandler.Get)
+	r.POST("/", urlHandler.Create)
+	r.POST("/custom", urlHandler.CreateCustom)
+
+	// return
+	return r
+	// return &gin.Engine{} // TODO: replace this
 }
