@@ -7,6 +7,13 @@ type Stack struct {
 	Data []rune
 }
 
+func NewStack() Stack {
+	return Stack{
+		Top:  -1,
+		Data: make([]rune, 0),
+	}
+}
+
 func (s *Stack) Push(Elemen rune) {
 	s.Top += 1
 	s.Data = append(s.Data, Elemen)

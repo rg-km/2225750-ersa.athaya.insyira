@@ -47,9 +47,15 @@ func SelectionSort(arr []int) []int {
 	for i := 0; i < len-1; i++ {
 		minIndex := i
 		for j := i + 1; j < len; j++ {
-			// TODO: answer here
+			// cek apakah elemen j lebih kecil dari elemen minimum
+			if arr[j] < arr[minIndex] {
+				minIndex = j
+				// TODO: answer here
+			}
+
+			// swap
+			arr[i], arr[minIndex] = arr[minIndex], arr[i]
 		}
 	}
-
 	return arr
 }

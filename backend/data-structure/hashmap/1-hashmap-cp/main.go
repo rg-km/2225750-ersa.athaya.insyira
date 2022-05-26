@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Person struct {
 	name string
@@ -10,13 +13,31 @@ type Person struct {
 func main() {
 	people := []Person{{name: "Bob", age: 21}, {name: "Sam", age: 28}, {name: "Ann", age: 21}, {name: "Joe", age: 22}, {name: "Ben", age: 28}}
 	fmt.Println(AgeDistribution(people))
-	fmt.Println(FilterByAge(people, 21))
+	fmt.Println(FilterByAge(people, 2))
 }
 
 func AgeDistribution(people []Person) map[int]int {
-	return map[int]int{} // TODO: replace this
+	ageDistribution := make(map[int]int)
+	for _, person := range people {
+		if _, ok := ageDistribution[person.age]; ok {
+			ageDistribution[person.age]++
+		} else {
+			ageDistribution[person.age] = 1
+		}
+	}
+	return ageDistribution // TODO: replace this
 }
 
-func FilterByAge(people []Person, age int) []Person {
-	return []Person{} // TODO: replace this
+func FilterByAge(people []Person, age int) ([]Person, error) {
+	var filteredPeople []Person
+	for _, person := range people {
+		if person.age == age {
+			filteredPeople = append(filteredPeople, person)
+		}
+	}
+
+	if len(filteredPeople) == 0 {
+		return filteredPeople,errors.New("Age not found")
+	}
+	return filteredPeople, nil // TODO: replace this
 }

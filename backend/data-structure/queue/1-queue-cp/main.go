@@ -40,11 +40,22 @@ package main
 import "fmt"
 
 func main() {
-	var students = []int{1, 1, 1, 0, 0, 1}
-	var sandwiches = []int{1, 0, 0, 0, 1, 1}
+	// var students = []int{1, 1, 1, 0, 0, 1}
+	// var sandwiches = []int{1, 0, 0, 0, 1, 1}
+	var students = []int{1, 1, 1, 0, 0, 0}
+	var sandwiches = []int{1, 1, 1, 0, 0, 0}
 	fmt.Println(CountStudents(students, sandwiches))
 }
 
 func CountStudents(students []int, sandwiches []int) int {
-	0 // TODO: replace this
+	// bandingkan siswa dan sandwich
+	for i := 0; i < len(students); i++ {
+		if students[i] == sandwiches[i] {
+			// jika sama maka hapus siswa dan sandwich
+			students = append(students[:i], students[i+1:]...)
+			sandwiches = append(sandwiches[:i], sandwiches[i+1:]...)
+			i--
+		}
+	}
+	return len(students)
 }

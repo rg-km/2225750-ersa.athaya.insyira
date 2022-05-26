@@ -16,15 +16,50 @@ package main
 import "fmt"
 
 func main() {
-	var str1 = []string{"Java", "Python", "Javascript", "C ++", "C#"}
-	var str2 = []string{"Swift", "Java", "Kotlin", "Python"}
+	var str1 = []string{"Java", "Python", "Javascript", "C ++", "C#", "Javascript", "Java"}
+	var str2 = []string{"Swift", "Java", "Kotlin", "Python", "C#", "C#"}
+	fmt.Println("Himpunan A:", str1)
+	fmt.Println("Himpunan B:", str2)
+	fmt.Println("After Intersection")
 	fmt.Println(Intersection(str1, str2))
+	fmt.Println("After Remove Duplicate Himpunan B")
+	fmt.Println(RemoveDuplicates(str1))
 }
 
 func Intersection(str1, str2 []string) (inter []string) {
-	return []string{} // TODO: replace this
+	// bikin variable penampung
+	temp := make(map[string]bool)
+
+	// looping str1[]string untuk mengisi variable penampung
+	for _, item := range str1 {
+		temp[item] = true
+	}
+
+	// looping str2[]string untuk mengecek apakah ada di variable penampung
+	// jika ada maka ditambahkan ke variable inter sebagai return
+	for _, item := range str2 {
+		if _, exist := temp[item]; exist {
+			inter = append(inter, item)
+		}
+	}
+	inter = RemoveDuplicates(inter)
+	return
 }
 
 func RemoveDuplicates(elements []string) (nodups []string) {
-	return []string{} // TODO: replace this
+	// bikin varible panampung
+	temp := make(map[string]bool)
+
+	// looping elements[]string untuk mengisi variable penampung
+	// di proses ini duplikat akan dihapus
+	for _, item := range elements {
+		temp[item] = true
+	}
+
+	// looping variable penampung untuk mengambil nilai
+	for key := range temp {
+		nodups = append(nodups, key)
+	}
+
+	return
 }

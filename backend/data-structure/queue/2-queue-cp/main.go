@@ -104,11 +104,42 @@ func main() {
 }
 
 func (q Queue) InsertRear(rearValue string) (Queue, error) {
-	return q, nil // TODO: replace this
+	// pengecekan apakah queue sudah penuh atau belum 
+	if r >= n {
+		return q, fmt.Errorf("Overflow")
+	}
+
+	// jika queue tidak penuh, maka tambahkan inputan pada bagian belakang
+	if r == -1 {
+		r = 0
+		f = 0
+	} else {
+		r++
+	}
+	q[r] = rearValue
+
+	return q, nil
 }
 
 func (q Queue) InsertFront(frontValue string) (Queue, error) {
-	return q, nil // TODO: replace this
+	// jika ada elemen di depan yang sama dengan inputan, maka tidak bisa di tambahkan
+	if f == 0 && q[f] == frontValue {
+		return q, fmt.Errorf("element cannot be inserted")
+	}
+
+	if f == 0 {
+		return q, fmt.Errorf("Overflow")
+	}
+
+	// jika memenuhi syarat maka tambahkan inputan pada bagian depan
+	if f == -1 {
+		f = 0
+		r = 0
+	} else {
+		f--
+	}
+	q[f] = frontValue
+	return q, nil
 }
 
 func (q Queue) deleteRear() (string, error) {

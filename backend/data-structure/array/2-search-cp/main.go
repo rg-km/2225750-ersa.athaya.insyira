@@ -15,5 +15,16 @@ func main() {
 }
 
 func SearchMatch(arr1 []string, arr2 []string) ([]string, error) {
-	return []string{}, nil // TODO: replace this
+	var result []string
+	for _, v1 := range arr1 {
+		for _, v2 := range arr2 {
+			if v1 == v2 {
+				result = append(result, v1)
+			}
+		}
+	}
+	if len(result) == 0 {
+		return nil, fmt.Errorf("no match")
+	}
+	return result, nil
 }
