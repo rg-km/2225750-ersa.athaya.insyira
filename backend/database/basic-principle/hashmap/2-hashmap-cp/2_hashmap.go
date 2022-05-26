@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type PrimaryKey int
 
 type InvoiceRow struct {
@@ -33,9 +31,41 @@ func (db *InvoiceDB) Insert(code string, name string, address string, phone stri
 }
 
 func (db *InvoiceDB) Where(id PrimaryKey) *InvoiceRow {
-	return InvoiceRow{} // TODO: replace this
+	// cek apakah id ada di db
+	if _, ok := db.m[id]; ok {
+		// return data di db
+		return &InvoiceRow{
+			ID:               id,
+			SubscriptionCode: db.m[id].SubscriptionCode,
+			CustomerName:     db.m[id].CustomerName,
+			Address:          db.m[id].Address,
+			Phone:            db.m[id].Phone,
+		}
+	}
+
+	return nil
 }
 
 func (db *InvoiceDB) Update(id PrimaryKey, code string, name string, address string, phone string) (*InvoiceRow, error) {
-	return nil, nil // TODO: replace this
+	// cek apakah id ada di db
+	if _, ok := db.m[id]; ok {
+		// update data di db
+		db.m[id] = InvoiceRow{
+			ID:               id,
+			SubscriptionCode: code,
+			CustomerName:     name,
+			Address:          address,
+			Phone:            phone,
+		}
+
+		return &InvoiceRow{
+			ID:               id,
+			SubscriptionCode: code,
+			CustomerName:     name,
+			Address:          address,
+			Phone:            phone,
+		}, nil
+	}
+
+	return nil, nil
 }

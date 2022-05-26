@@ -33,9 +33,27 @@ func (db *EmployeeDB) Insert(name string, position string, salary int, managerID
 }
 
 func (db *EmployeeDB) Update(id int, name string, position string, salary int, managerID int) {
-	// TODO: answer here
+	// cek apakah id ada di db lalu update data di db
+	for i := 0; i < len(*db); i++ {
+		if (*db)[i].ID == id {
+			(*db)[i].Name = name
+			(*db)[i].Position = position
+			(*db)[i].Salary = salary
+			(*db)[i].ManagerID = managerID
+		}
+	}
 }
 
 func (db *EmployeeDB) Delete(id int) {
-	// TODO: answer here
+	// cek apakah id ada di db
+	if db.Where(id) != nil {
+		// hapus data di db
+		for i := 0; i < len(*db); i++ {
+			if (*db)[i].ID == id {
+				(*db)[i] = (*db)[len(*db)-1]
+				(*db) = (*db)[:len(*db)-1]
+				break
+			}
+		}
+	}
 }
