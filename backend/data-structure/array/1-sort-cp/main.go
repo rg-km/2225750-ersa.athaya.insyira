@@ -25,9 +25,25 @@ func main() {
 }
 
 func Sort(arr []int) []int {
-	return []int{} // TODO: replace this
+
+	for i := 0; i < len(arr)-1; i++ {
+		for j := 0; j < len(arr)-1; j++ {
+			if arr[j] > arr[j+1] {
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+			}
+		}
+	}
+	return arr
 }
 
 func RotateLeft(d int, arr []int) []int {
-	return []int{} // TODO: replace this
+	for i := d; i >= 0; i-- {
+		for j := 0; j < i; j++ {
+			if arr[i] > arr[i-1] {
+				arr[i], arr[i-1] = arr[i-1], arr[i]
+			}
+		}
+	}
+
+	return arr
 }

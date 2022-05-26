@@ -1,7 +1,7 @@
 package main
 
 import (
-	"strings"
+	"fmt"
 
 	"github.com/ruang-guru/playground/backend/data-structure/assignment/parentheses-validation/stack"
 )
@@ -29,29 +29,39 @@ import (
 // Penjelasan: tanda kurung buka ditutup dengan pasangannya dan sesuai dengan urutan.
 
 func IsValidParentheses(s string) bool {
+	// inisiasi stack
+	stack := stack.NewStack()
+	
+	// jika string kosong, return false
 	if s == "" {
 		return false
 	}
-	stack := new(stack.Stack)
-	stack.Top = -1
-
-	tandaKurung := map[string]int{
-		"{": 1, "}": -1, "(": 2, ")": -2, "[": 3, "]": -3,
-	}
-
-	for i := 0; i < strings.Count(s, "")-1; i++ {
-		if tandaKurung[string(s[i])] > 0 {
+	for _, char := range s {
+		if char == '(' || char == '{' || char == '[' {
+			stack.Push(char)
 		} else {
-			peekValue, err := stack.Peek()
-			if err == nil {
-				if tandaKurung[string(s[i])]+tandaKurung[string(peekValue)] == 0 {
-					stack.Pop()
-				}
+			if stack.IsEmpty() {
+				return false
 			}
+			top, _ := stack.Peek()
+			if char == ')' && top != '(' {
+				return false
+			}
+			if char == '}' && top != '{' {
+				return false
+			}
+			if char == ']' && top != '[' {
+				return false
+			}
+			stack.Pop()
 		}
 	}
-	if len(stack.Data) == 0 && tandaKurung[string(s[0])] > 0 {
-		return true
-	}
-	return false // TODO: answer here
+	return stack.IsEmpty()
+}
+
+func main() {
+	fmt.Println(IsValidParentheses("()"))
+	fmt.Println(IsValidParentheses("{)"))
+	fmt.Println(IsValidParentheses("([])"))
+	fmt.Println(IsValidParentheses(""))
 }

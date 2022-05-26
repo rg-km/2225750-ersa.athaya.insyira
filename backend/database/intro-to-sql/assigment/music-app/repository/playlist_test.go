@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"fmt"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -29,7 +30,8 @@ var _ = Describe("Playlist", func() {
 		_, err = db.Exec(`INSERT INTO users (id, name, created_at) VALUES
 			(1, 'John', '2020-01-01 00:00:00');`)
 		if err != nil {
-			panic(err)
+			// panic(err)
+			fmt.Println(err)
 		}
 
 		_, err = db.Exec(`CREATE TABLE IF NOT EXISTS playlists (
@@ -47,7 +49,8 @@ var _ = Describe("Playlist", func() {
 		(2, 'POP 2022', '2020-01-01 00:00:00', 1),
 		(3, 'Rock', '2020-01-01 00:00:00', 1);`)
 		if err != nil {
-			panic(err)
+			// panic(err)
+			fmt.Println(err)
 		}
 
 		_, err = db.Exec(`CREATE TABLE IF NOT EXISTS tracks (
@@ -67,7 +70,8 @@ var _ = Describe("Playlist", func() {
     	(5, 'Music E', 'Rony', '2020-01-01 00:00:00'),
     	(6, 'Music F', 'Jane', '2020-01-01 00:00:00');`)
 		if err != nil {
-			panic(err)
+			// panic(err)
+			fmt.Println(err)
 		}
 
 		_, err = db.Exec(`CREATE TABLE IF NOT EXISTS playlist_tracks (
@@ -87,7 +91,8 @@ var _ = Describe("Playlist", func() {
 		(2, 5),
 		(3, 6);`)
 		if err != nil {
-			panic(err)
+			// panic(err)
+			fmt.Println(err)
 		}
 	})
 

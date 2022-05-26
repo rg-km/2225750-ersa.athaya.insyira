@@ -32,7 +32,8 @@ func FibonacciRecursion(i int) int {
 	if i == 1 {
 		return 1
 	}
-
+	fib := FibonacciRecursion(i-1) + FibonacciRecursion(i-2)
+	return fib
 	// TODO: answer here
 }
 

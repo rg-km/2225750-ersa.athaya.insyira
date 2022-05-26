@@ -25,7 +25,10 @@ func Rotate(index int, args []int) []int {
 	}
 
 	if index == 0 {
-		// TODO: answer here
+		// kita tukar posisi elemen pertama dengan terakhir
+		last := args[len(args)-1]
+		args[len(args)-1] = args[0]
+		args[0] = last
 		return Rotate(1, args)
 	}
 
@@ -34,7 +37,6 @@ func Rotate(index int, args []int) []int {
 	}
 
 	return Rotate(index+1, args)
-
 }
 
 func main() {

@@ -37,10 +37,11 @@ import "fmt"
 
 func main() {
 	var nums = []int{1, 3, 12, 23, 34, 56, 62, 98, 99}
-	fmt.Println(LinearSearch(nums, 34))
+	fmt.Println(LinearSearch(nums, 99))
 }
 
 func LinearSearch(arr []int, search int) string {
+	fmt.Println("len arr:", len(arr))
 	searchResult := fmt.Sprintf("%d not found!", search)
 	for i := 0; i < len(arr); i++ {
 		if search == arr[i] {

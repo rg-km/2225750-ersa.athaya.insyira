@@ -42,11 +42,13 @@ func main() {
 }
 
 func sortArray(arr []int) []int {
+	fmt.Println("len array : ", len(arr))
 	swapped := false //Untuk memeriksa apakah array sudah diurutkan; kemudian return;
 	for i := 0; i < len(arr)-1; i++ {
 		for j := 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
 				//elemen bertukar
+				// arr[j], arr[j+1] = arr[j+1], arr[j]
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 				swapped = true
 			}
@@ -55,5 +57,6 @@ func sortArray(arr []int) []int {
 			return arr
 		}
 	}
+	fmt.Println(swapped)
 	return arr
 }

@@ -30,9 +30,15 @@ func main() {
 func TwoTargetSums(nums []int, target int) []int {
 	numberMap := make(map[int]int)
 	output := make([]int, 2)
-	for i := 0; i < len(nums); i++ {
+	for i := 0; i < len(nums); i++ { // O(n)
 		val, ok := numberMap[target-nums[i]]
-		// TODO: answer here
+		if ok { // O(1)
+			output[0] = val
+			output[1] = i
+			return output
+		}
+		numberMap[nums[i]] = i
 	}
+	// O(n) + O(1) = O(n)
 	return output
 }

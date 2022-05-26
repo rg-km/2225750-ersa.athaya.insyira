@@ -22,12 +22,19 @@ func (s *Set) Add(elem string) {
 
 // Delete - menghapus elemen dari set
 func (s *Set) Delete(elem string) (bool, error) {
-	return fmt.Errorf("replace this with your code") // TODO: replace this
+	// cek apakah data yang akan didelete ada di set
+	if _, ok := s.Elements[elem]; !ok {
+		return false, fmt.Errorf("delete failed!, element %s is not in the set", elem)
+	} else {
+		delete(s.Elements, elem)
+		return true, nil
+	}
 }
 
 // Contains - memeriksa apakah elemen ada dalam set
 func (s *Set) Contains(elem string) bool {
-	return false // TODO: replace this
+	 _, isAvail := s.Elements[elem]
+	return isAvail
 }
 
 // List - menampilkan elemen dari set

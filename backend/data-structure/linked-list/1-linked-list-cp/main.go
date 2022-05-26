@@ -43,6 +43,7 @@ func main() {
 
 	data := node1.MiddleNode(node1)
 
+
 	// Print Middle Node
 	fmt.Println("Middle Node: ", data)
 	// Print Next Node
@@ -58,12 +59,27 @@ func main() {
 }
 
 func (node ListNode) MiddleNode(head *ListNode) *ListNode {
-	l := 0
-	tmp := head
-	for tmp != nil {
-		tmp = tmp.Next
-		l++
+	// Write your code here
+	var middleNode *ListNode
+	var count int
+	var middleCount int
+
+	for head != nil {
+		count++
+		head = head.Next
 	}
-	// TODO: answer here
-	return head
+
+	middleCount = count / 2
+
+	head = &node
+	for head != nil {
+		if middleCount == 0 {
+			middleNode = head
+		}
+		middleCount--
+		head = head.Next
+	}
+
+	return middleNode
+
 }
