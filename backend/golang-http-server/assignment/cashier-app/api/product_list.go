@@ -38,5 +38,16 @@ func (api *API) productList(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	encoder.Encode(ProductListSuccessResponse{Products: []Product{}}) // TODO: replace this
+	// looping products dan append data ke response.Products
+	for _, product := range products {
+		response.Products = append(response.Products, Product{
+			Name:     product.ProductName,
+			Price:    product.Price,
+			Category: product.Category,
+		})
+	}
+
+	// encode response ke json
+	encoder.Encode(response)
+	// encoder.Encode(ProductListSuccessResponse{Products: []Product{}}) // TODO: replace this
 }

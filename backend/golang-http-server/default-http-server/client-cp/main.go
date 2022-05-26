@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -13,4 +13,25 @@ import (
 
 func main() {
 	// TODO: answer here
+	
+	// inisialisasi client http
+	myClient := &http.Client{}
+
+	// lakukan hit endpoint
+	resp, err := myClient.Get("https://www.metaweather.com/api/location/1047378/2019/10/10")
+	// cek error
+	if err != nil {
+		log.Fatal(err)
+	}
+	// defer
+	defer resp.Body.Close()
+	// ubah resp menjadi byte dengan membaca semua respon body
+	body, err := ioutil.ReadAll(resp.Body)
+	// cek error
+	if err != nil {
+		log.Fatal(err)
+	}
+	// print respon body
+	log.Println(string(body))
+
 }
