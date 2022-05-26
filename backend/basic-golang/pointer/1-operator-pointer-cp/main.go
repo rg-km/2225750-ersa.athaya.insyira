@@ -11,4 +11,7 @@ func main() {
 	isMarried := true
 
 	// TODO: answer here
+	fmt.Printf("Name : %v\n", &name)
+	fmt.Printf("Age : %v\n", &age)
+	fmt.Printf("IsMarried : %v\n", &isMarried)
 }

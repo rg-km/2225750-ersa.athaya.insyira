@@ -16,8 +16,8 @@ func main() {
 	fmt.Println(res)
 
 	// Try correct answer:
-	// resCorrect := findMaxCorrect(arr)
-	// fmt.Println(resCorrect)
+	resCorrect := findMaxCorrect(arr)
+	fmt.Println(resCorrect)
 }
 
 func findMax(arr []int) int {

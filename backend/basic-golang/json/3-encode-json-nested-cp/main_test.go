@@ -17,8 +17,10 @@ var _ = Describe("JSON Encode", func() {
 					Warna:  "Coklat",
 					Jumlah: 20,
 					Ukuran: jsonencode.Ukuran{
-						Panjang: "50 cm",
-						Tinggi:  "25 cm",
+						
+							Panjang: "50 cm",
+							Tinggi:  "25 cm",
+						
 					},
 				},
 				{
@@ -26,8 +28,10 @@ var _ = Describe("JSON Encode", func() {
 					Warna:  "Hitam",
 					Jumlah: 1,
 					Ukuran: jsonencode.Ukuran{
+						
 						Panjang: "70 cm",
 						Tinggi:  "30 cm",
+						
 					},
 				},
 			}}

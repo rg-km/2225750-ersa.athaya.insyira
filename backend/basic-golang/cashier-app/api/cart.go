@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/ruang-guru/playground/backend/basic-golang/cashier-app/repository"
@@ -55,37 +56,33 @@ func (api *API) addToCart(w http.ResponseWriter, req *http.Request) {
 func (api *API) clearCart(w http.ResponseWriter, req *http.Request) {
 	api.AllowOrigin(w, req)
 	err := api.cartItemRepo.ResetCartItems()
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		encoder := json.NewEncoder(w)
-		encoder.Encode(CartErrorResponse{Error: err.Error()})
-		return
-	}
+	encoder := json.NewEncoder(w)
+	defer func() {
+		if err != nil {
+			// TODO: answer here
+			w.WriteHeader(http.StatusBadRequest)
+			encoder.Encode(CartErrorResponse{Error: err.Error()})
+			return
+		}
+	}()
 
 	w.WriteHeader(http.StatusOK)
-	// TODO: answer here
 }
 
 func (api *API) cartList(w http.ResponseWriter, req *http.Request) {
 	api.AllowOrigin(w, req)
 	cartItems, err := api.cartItemRepo.SelectAll()
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		encoder := json.NewEncoder(w)
-		encoder.Encode(CartErrorResponse{Error: err.Error()})
-		return
-	}
-
-	// looping cartItems dan ubah kedalam bentuk json
-	var cartItemsJson []repository.CartItem
-	for _, cartItem := range cartItems {
-		cartItemsJson = append(cartItemsJson, cartItem)
-
-	}
-
-	// kirim response
-	w.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(w)
-	encoder.Encode(CartListSuccessResponse{CartItems: cartItemsJson})
+	defer func() {
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			encoder.Encode(CartErrorResponse{Error: err.Error()})
+		}
+	}()
+
+	fmt.Println(cartItems)
+
+	w.WriteHeader(http.StatusOK)
+	encoder.Encode(CartListSuccessResponse{CartItems: cartItems})
 	// encoder.Encode(CartListSuccessResponse{CartItems: []repository.CartItem{}}) // TODO: replace this
 }

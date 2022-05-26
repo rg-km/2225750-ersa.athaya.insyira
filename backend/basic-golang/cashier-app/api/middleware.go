@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 func (api *API) AllowOrigin(w http.ResponseWriter, req *http.Request) {
@@ -33,12 +33,23 @@ func (api *API) AuthMiddleWare(next http.Handler) http.Handler {
 		//       3. return bad request ketika field token tidak ada
 
 		// TODO: answer here
+		myToken, err := r.Cookie("token")
+		if err != nil {
+			if err == http.ErrNoCookie {
+				w.WriteHeader(http.StatusUnauthorized)
+				encoder.Encode(AuthErrorResponse{Error: "Unauthorized"})
+				return
+			}
+			w.WriteHeader(http.StatusBadRequest)
+		}
 
 		// Task: Ambil value dari cookie token
 
 		// TODO: answer here
+		tokenVal := myToken.Value
 
 		// Task: Deklarasi variable claim
+		myClaim := &Claims{}
 
 		// TODO: answer here
 
@@ -48,9 +59,32 @@ func (api *API) AuthMiddleWare(next http.Handler) http.Handler {
 		//       4. return unauthorized ketika token sudah tidak valid (biasanya karna token expired)
 
 		// TODO: answer here
+		token, err := jwt.ParseWithClaims(tokenVal, myClaim, func(token *jwt.Token) (interface{}, error) {
+			return jwtKey, nil
+		})
+
+		if err != nil {
+			if err == jwt.ErrSignatureInvalid {
+				w.WriteHeader(http.StatusUnauthorized)
+				encoder.Encode(AuthErrorResponse{Error: "Unauthorized"})
+				return
+			}
+			w.WriteHeader(http.StatusBadRequest)
+			encoder.Encode(AuthErrorResponse{Error: "Bad Request"})
+			return
+
+		}
+
+		if !token.Valid {
+			w.WriteHeader(http.StatusUnauthorized)
+			encoder.Encode(AuthErrorResponse{Error: "Unauthorized"})
+			return
+		}
 
 		// Task: Validasi
+		ctx := context.WithValue(r.Context(), "user", myClaim.Username)
+		next.ServeHTTP(w, r.WithContext(ctx))
 
-		return next.ServeHTTP(w, r) // TODO: replace this
+		// return next.ServeHTTP(w, r) // TODO: replace this
 	})
 }

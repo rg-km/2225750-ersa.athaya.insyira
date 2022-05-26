@@ -1,10 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
+	"encoding/json"
 )
 
 // Dari contoh sebelumnya tambahkan filter untuk
@@ -20,16 +20,55 @@ type Table struct {
 }
 
 func TableHandler(w http.ResponseWriter, r *http.Request) {
+	// set header content-type dengan json untuk menentukan response type
 	w.Header().Set("Content-Type", "application/json")
 
 	if r.Method == "GET" {
 
-		// TODO: answer here
-		http.Error(w, `{"status":"table not found"}`, http.StatusNotFound)
-		return
+		// ambil value dari key `total`
+		total := r.FormValue("total")
+
+		// convert string ke integer
+		totalInt, _ := strconv.Atoi(total)
+
+		// cek apakah total yang diinput user adalah angka atau bukan
+		if totalInt > 0 {
+
+			// filter data meja berdasarkan total meja
+			var result []Table
+			for _, table := range data {
+				if table.Total == totalInt {
+					result = append(result, table)
+				}
+			}
+
+			// jika total tidak ada dalam data,
+			// maka return response table not found
+			if len(result) == 0 {
+				http.Error(w, `{"status":"table not found"}`, http.StatusNotFound)
+				return
+			}
+
+			// encode data ke dalam format string JSON
+			resultJSON, err := json.Marshal(result)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			w.Write(resultJSON)
+			return
+
+		} else {
+			// kirim pesan error bad request
+			http.Error(w, "invalid total", http.StatusBadRequest)
+			return
+		}
 	}
 
+	// jika method yang diinputkan bukan GET
 	http.Error(w, "", http.StatusBadRequest)
+
 }
 
 var data = []Table{

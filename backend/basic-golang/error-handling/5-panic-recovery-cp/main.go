@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
 	// Dari contoh yang telah diberikan, coba kamu handle error panic code dibawah ini, sehingga code dapat terus berjalan sampai akhir.
@@ -26,7 +29,10 @@ func main() {
 
 func printBook(i int) {
 	// TODO: answer here
-
+	defer deferring()
+	if i > 2 {
+		panic("runtime error: index out of range [" + strconv.Itoa(i) + "] with length 3")
+	}
 	books := []string{
 		"The Eye of the World",
 		"The Great Hunt",
@@ -38,4 +44,8 @@ func printBook(i int) {
 
 func deferring() {
 	// TODO: answer here
+	pesan := recover()
+	if pesan != nil {
+		fmt.Printf("Panic error terdeteksi: %v \n", pesan)
+	}
 }

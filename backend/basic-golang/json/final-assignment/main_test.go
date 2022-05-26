@@ -13,6 +13,28 @@ var _ = Describe("JSON Encode", func() {
 		It("encoding string JSON array nested", func() {
 			items := jsonencode.Ruang{}
 			// TODO: answer here
+			items = jsonencode.Ruang{jsonencode.Items{
+				[]jsonencode.Item{
+					{
+						Nama:   "Meja",
+						Jumlah: 20,
+						Warna:  "Coklat",
+						Ukuran: jsonencode.Ukuran{
+							Panjang: "50 cm",
+							Tinggi:  "25 cm",
+						},
+					},
+					{
+						Nama:   "Kursi",
+						Jumlah: 1,
+						Warna:  "Hitam",
+						Ukuran: jsonencode.Ukuran{
+							Panjang: "70 cm",
+							Tinggi:  "30 cm",
+						},
+					},
+				},
+			}}
 
 			meja := jsonencode.NewRuang(items)
 			result := meja.EncodeJSON()

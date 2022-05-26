@@ -14,4 +14,14 @@ func main() {
 		"Aurelius", "is", "also", "known", "to", "be", "a", "philosopher"}
 
 	// TODO: answer here
+	sentenceOne := slice[0:5]
+	sentenceTwo := slice[18:20]
+	newSlace := []string{}
+	newSlace = append(newSlace, sentenceOne...)
+	newSlace = append(newSlace, sentenceTwo...)
+	fmt.Println(newSlace)
+
+	// fmt.Println(sentenceOne)
+	// fmt.Println(sentenceTwo)
+
 }

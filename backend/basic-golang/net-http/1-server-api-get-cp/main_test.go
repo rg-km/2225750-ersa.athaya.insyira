@@ -59,6 +59,7 @@ var _ = Describe("GET JSON Response", func() {
 			}
 
 			Expect(string(b)).To(Equal(`[{"id":"T001","type":"Meja Lipat","color":"Coklat","total":3},{"id":"T004","type":"Meja Hejau","color":"Hijau","total":3}]`))
+
 		})
 	})
 
@@ -74,7 +75,7 @@ var _ = Describe("GET JSON Response", func() {
 			result := rec.Result()
 			defer result.Body.Close()
 			if result.StatusCode != http.StatusNotFound {
-				log.Fatalf("expected status not found 404; got %v", result.StatusCode)
+				log.Fatalf("expected status not found 400; got %v", result.StatusCode)
 			}
 
 			b, err := ioutil.ReadAll(result.Body)

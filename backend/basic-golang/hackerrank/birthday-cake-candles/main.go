@@ -12,6 +12,19 @@ import (
 
 func birthdayCakeCandles(candles []int32) int32 {
 	// TODO: answer here
+	var max int32 = 0
+	var score = make(map[int32]int32)
+	for _, val := range candles {
+		if max < val {
+			max = val
+			score[max] = 1
+		} else if max == val {
+			score[max]++
+		}
+		fmt.Println("Nilai max :", max)
+		fmt.Println("Nilai score : ", score)
+	}
+	return score[max]
 }
 
 func main() {

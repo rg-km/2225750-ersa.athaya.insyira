@@ -10,8 +10,24 @@ import "fmt"
 
 func GetMenu() []map[string]interface{} {
 	var menu []map[string]interface{}
-
 	// TODO: answer here
+
+	// buat menu secara terpisah
+	ayam := map[string]interface{}{
+		"Nama":  "Ayam Goreng",
+		"Jenis": "Cepat saji",
+		"Harga": 20000,
+	}
+
+	cola := map[string]interface{}{
+		"Nama":  "Cola",
+		"Jenis": "Minuman",
+		"Harga": 7000,
+	}
+
+	// add menu ke map
+	menu = append(menu, ayam)
+	menu = append(menu, cola)
 
 	return menu
 }

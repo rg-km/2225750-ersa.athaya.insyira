@@ -13,6 +13,9 @@ import (
 
 func staircase(n int32) {
 	// TODO: answer here
+	for i := int32(1); i <= n; i++ {
+		fmt.Printf("%*s\n", n, strings.Repeat("#", int(i)))
+	}
 
 }
 

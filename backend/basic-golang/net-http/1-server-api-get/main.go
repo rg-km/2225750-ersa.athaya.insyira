@@ -54,7 +54,7 @@ func table(w http.ResponseWriter, r *http.Request) {
 					return
 				}
 
-				// daftarkan response `result` jika ditemukan id yang sesuai dengan input client
+				// daftarkan response `result` jika ditemukan id yang sesuai dengan input client,
 				w.Write(result)
 				return
 			}
