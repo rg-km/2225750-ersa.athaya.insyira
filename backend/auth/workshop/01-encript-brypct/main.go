@@ -19,5 +19,10 @@ func main() {
 func encryptToBcrypt(str string) (string, error) {
 	// Task: Hashing the password with the default cost of 10
 
-	return "", nil // TODO: replace this
+	hashedStr, err := bcrypt.GenerateFromPassword([]byte(str), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+
+	return string(hashedStr), nil
 }
