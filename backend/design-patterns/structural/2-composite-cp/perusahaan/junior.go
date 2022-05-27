@@ -8,5 +8,6 @@ func (j Junior) GetSalary() int {
 }
 
 func (j Junior) TotalDivisonSalary() int {
-	return 0 // TODO: replace this
+	// TODO: replace this
+	return j.GetSalary()
 }

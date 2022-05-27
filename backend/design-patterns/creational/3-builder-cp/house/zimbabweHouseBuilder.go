@@ -6,11 +6,11 @@ type zimbabweHouseBuilder struct {
 
 // di Zimbabwe sendiri kita hanya bisa membuat jendela dengan maksimal 2
 func (i *zimbabweHouseBuilder) buildWindow(numOfWindow int) {
+	// TODO: answer here
 	if numOfWindow > 2 {
-		i.house.NumOfWindows = 2
-	} else {
-		i.house.NumOfWindows = numOfWindow
+		numOfWindow = 2
 	}
+	i.house.NumOfWindows = numOfWindow
 }
 
 func (i *zimbabweHouseBuilder) buildDoor() {
@@ -22,6 +22,7 @@ func (i *zimbabweHouseBuilder) buildGarage() {
 }
 
 func (i *zimbabweHouseBuilder) buildSwimmingPool() {
+	// TODO: answer here
 	i.house.HasSwimmingPool = true
 }
 
