@@ -49,7 +49,25 @@ func main() {
 }
 
 func updateJSON(fileName string, newData []student) ([]student, error) {
-	return []student{}, nil // TODO: replace this
+	path, err := filepath.Abs(fileName + ".json")
+	if err != nil {
+		return nil, err
+	}
+
+	file, err := openFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	defer file.Close()
+
+	students, _ := readJSON(fileName)
+
+	students = append(students, newData...)
+
+	jsonData, _ := json.Marshal(students)
+	ioutil.WriteFile(path, jsonData, 0644)
+	return students, nil // TODO: replace this
 }
 
 func openFile(path string) (*os.File, error) {

@@ -6,7 +6,12 @@ import (
 )
 
 func main() {
-	fmt.Println("dummyCommit")
+	res, _ := ReadFile("./read.txt")
+	fmt.Printf("File Name: %s", res.Name)
+	fmt.Printf("\nSize: %d bytes", res.Size)
+	fmt.Printf("\nData: %s\n", res.Data)
+
+	//fmt.Println("dummyCommit")
 }
 
 // Gunakan struct untuk menyimpan data file nya ya
@@ -17,5 +22,17 @@ type FileData struct {
 }
 
 func ReadFile(name string) (FileData, error) {
-	return FileData{}, nil // TODO: replace this
+	// nama text file yang ingin dibaca
+	fileName := name
+
+	//membaca text file
+	data, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		return FileData{}, err
+	}
+	return FileData{
+		Name: fileName,
+		Size: len(data),
+		Data: data,
+	}, nil
 }
